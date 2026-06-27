@@ -1,2 +1,4 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+
+#implementation of the root application for the dev environment
