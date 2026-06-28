@@ -1,0 +1,54 @@
+nameOverride: "user-service"
+fullnameOverride: "user-service"
+replicaCount: 2
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+containerPort: 8000
+command: []
+args: []
+
+service:
+  enabled: true
+  type: NodePort
+  port: 80
+  nodePort: 30134
+
+ingress:
+  enabled: true
+  host: user-api.tail97d15d.ts.net
+  path: /
+
+
+config:
+  DATABASE_URL: "postgresql://postgres:postgres123@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
+  RABBITMQ_HOST: "rabbitmq.database.svc.cluster.local"
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_URL: "amqp://admin:admin123@rabbitmq.database.svc.cluster.local:5672/%2F"
+  AMQP_URL: "amqp://admin:admin123@rabbitmq.database.svc.cluster.local:5672/%2F"
+  RABBITMQ_USER: "admin"
+  RABBITMQ_USERNAME: "admin"
+  RABBITMQ_DEFAULT_USER: "admin"
+
+secrets:
+  RABBITMQ_PASS: "admin123"
+  RABBITMQ_PASSWORD: "admin123"
+  RABBITMQ_DEFAULT_PASS: "admin123"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
